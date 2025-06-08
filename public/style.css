@@ -1,0 +1,16 @@
+body {
+  min-height: 100vh;
+}
+
+.title {
+  color: white;
+}
+
+body,
+button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.display-weather {
+  background-color: rgb(215, 215, 215);
+}

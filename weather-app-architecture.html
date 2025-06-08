@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>天気予報表示アプリ アーキテクチャ図</title>
+    <style>
+      body {
+        font-family: "Noto Sans JP", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #aab8c6;
+        margin: 0;
+        padding: 20px 40px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .title {
+        font-weight: 900;
+        font-size: 28px;
+        margin-bottom: 40px;
+        color: #222;
+      }
+
+      .architecture {
+        display: grid;
+        grid-template-columns: 1fr 180px 1fr 180px 1fr;
+        gap: 0px;
+        margin: 40px 0;
+        position: relative;
+      }
+
+      .architecture>.layer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 230px;
+        background: white;
+        border-radius: 15px;
+        padding: 20px 18px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        font-size: 14.5px;
+        line-height: 1.5;
+      }
+
+      /* Node.jsバッジのスペース確保を45pxに増やす */
+      .frontend-layer,
+      .api-layer {
+        padding-top: 45px;
+      }
+
+      .layer:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .layer-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .node-badge {
+        font-size: 12px;
+        font-weight: 700;
+        background-color: #539e43;
+        color: white;
+        border-radius: 10px;
+        padding: 5px 10px;
+        display: inline-block;
+        margin-bottom: 10px;
+        position: absolute;
+        top: 4px;
+        /* ここを少し下げて調整 */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+
+      .layer-title {
+        font-weight: 900;
+        font-size: 22px;
+        margin-bottom: 15px;
+        color: #222;
+      }
+
+      .layer-content {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #555;
+      }
+
+      .highlight {
+        font-weight: 900;
+        color: #d9534f;
+      }
+
+      .architecture>.arrow {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 230px;
+        gap: 15px;
+        position: relative;
+        font-weight: 700;
+        color: #888;
+        user-select: none;
+        font-size: 14px;
+      }
+
+      .arrow-line {
+        font-size: 30px;
+        color: #1E3A8A;
+        /* 濃いネイビーブルー */
+      }
+
+      .return-arrow-line {
+        font-size: 30px;
+        color: #d9534f;
+        /* 落ち着いたグリーン */
+      }
+
+      .arrow-label {
+        font-size: 16px;
+        line-height: 1.3;
+        max-width: 160px;
+        color: #1E3A8A;
+        /* ネイビーと統一 */
+      }
+
+      .return-arrow-label {
+        font-size: 16px;
+        line-height: 1.3;
+        max-width: 160px;
+        color: #d9534f;
+        /* グリーンと統一 */
+      }
+
+      .return-arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="architecture">
+        <!-- フロントエンド -->
+        <div class="layer frontend-layer">
+          <div class="layer-icon">🌐</div>
+          <div class="layer-title">フロントエンド</div>
+          <div class="layer-content">
+            HTML・CSS・JavaScript<br />
+            ユーザーが操作する画面<br />
+            都市名入力フォーム<br />
+            天気情報の表示
+          </div>
+        </div>
+
+        <!-- 矢印1 -->
+        <div class="arrow">
+          <div class="arrow-line">→</div>
+          <div class="arrow-label">都市名送信</div>
+          <div class="return-arrow">
+            <div class="return-arrow-line">←</div>
+            <div class="return-arrow-label">天気データ返却</div>
+          </div>
+        </div>
+
+        <!-- バックエンド -->
+        <div class="layer backend-layer">
+          <div class="node-badge">Node.js</div>
+          <div class="layer-icon">🖥️</div>
+          <div class="layer-title">バックエンド</div>
+          <div class="layer-content">
+            Node.jsサーバー<br />
+            リクエスト処理<br />
+            APIキー管理<br />
+            データの中継処理
+          </div>
+        </div>
+
+        <!-- 矢印2 -->
+        <div class="arrow">
+          <div class="arrow-line">→</div>
+          <div class="arrow-label">API呼び出し<br />(APIキー使用)</div>
+          <div class="return-arrow">
+            <div class="return-arrow-line">←</div>
+            <div class="return-arrow-label">天気情報取得</div>
+          </div>
+        </div>
+
+        <!-- 外部API -->
+        <div class="layer api-layer">
+          <div class="layer-icon">🌤️</div>
+          <div class="layer-title">天気API</div>
+          <div class="layer-content">
+            OpenWeatherAPI<br />
+            天気データ提供<br />
+            現在の天気<br />
+            週間予報
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
