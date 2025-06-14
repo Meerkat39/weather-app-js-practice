@@ -9,6 +9,7 @@ const humidityText = document.querySelector("#humidity");
 const windSpeedText = document.querySelector("#wind-speed");
 const pressureText = document.querySelector("#pressure");
 
+// HTMLファイルの更新
 const updateHTML = (weatherInfo) => {
   // データの取得
   const cityName = searchInput.value;
@@ -36,9 +37,12 @@ const updateHTML = (weatherInfo) => {
   displayIcon.append(newImg);
 };
 
+// 検索ボタンが押されたときの処理
 searchButton.addEventListener("click", async () => {
+  // 検索された都市の取得
   const city = searchInput.value;
 
+  // 天気情報の取得・表示
   try {
     const res = await axios.get(`/weather?city=${city}`);
     const weatherInfo = res.data;
